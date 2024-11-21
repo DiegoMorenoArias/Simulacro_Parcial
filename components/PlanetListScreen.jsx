@@ -34,6 +34,27 @@ const PlanetListScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => router.push("/add-edit")}
+      >
+        <Text style={styles.addButtonText}>Agregar Planeta</Text>
+      </TouchableOpacity>
+      <SafeAreaView>
+        <FlatList
+          style={styles.flatList}
+          data={planets}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <SafeAreaView>
+              <PlanetCard
+                planet={item}
+                onPress={() => handlePlanetPress(item.id)}
+              />
+            </SafeAreaView>
+          )}
+        />
+      </SafeAreaView>
       <FlatList
         style={styles.flatList}
         data={planets}
@@ -45,12 +66,6 @@ const PlanetListScreen = () => {
           />
         )}
       />
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => router.push("/add-edit")}
-      >
-        <Text style={styles.addButtonText}>Agregar Planeta</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };

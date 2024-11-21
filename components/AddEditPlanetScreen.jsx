@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { View, TextInput, Button, StyleSheet, Text } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { API_BASE_URL } from "../constants/Config";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-// Definimos el componente como una función normal
 const AddEditPlanetScreen = () => {
   const { id } = useLocalSearchParams();
   const router = useRouter();
@@ -34,7 +34,6 @@ const AddEditPlanetScreen = () => {
           image: data.image || "",
         });
       } else {
-        console.log("aca");
         console.error("Error: No se pudieron obtener los detalles del planeta");
       }
     } catch (error) {
@@ -56,7 +55,7 @@ const AddEditPlanetScreen = () => {
       });
 
       if (response.ok) {
-        router.back(); // Navegar hacia atrás al guardar exitosamente
+        router.replace("/");
       } else {
         console.error("Error al guardar el planeta.");
       }
@@ -66,25 +65,28 @@ const AddEditPlanetScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>
         {id ? "Editar Planeta" : "Agregar Planeta"}
       </Text>
       <TextInput
         style={styles.input}
         placeholder="Nombre"
+        placeholderTextColor="#ffffff"
         value={planet.name}
         onChangeText={(text) => setPlanet({ ...planet, name: text })}
       />
       <TextInput
         style={styles.input}
         placeholder="Descripción"
+        placeholderTextColor="#ffffff"
         value={planet.description}
         onChangeText={(text) => setPlanet({ ...planet, description: text })}
       />
       <TextInput
         style={styles.input}
         placeholder="Cantidad de lunas"
+        placeholderTextColor="#ffffff"
         value={planet.moons.toString()}
         keyboardType="numeric"
         onChangeText={(text) =>
@@ -94,12 +96,17 @@ const AddEditPlanetScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Imagen (URL)"
+        placeholderTextColor="#ffffff"
         value={planet.image}
         onChangeText={(text) => setPlanet({ ...planet, image: text })}
       />
       <Button title="Guardar" onPress={handleSave} color="#4b0082" />
-      <Button title="Cancelar" onPress={() => router.back()} color="gray" />
-    </View>
+      <Button
+        title="Cancelar"
+        onPress={() => router.replace("/")}
+        color="gray"
+      />
+    </SafeAreaView>
   );
 };
 
@@ -107,27 +114,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#1a1a40", // Fondo cósmico
+    backgroundColor: "#1a1a40",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#ffffff", // Texto blanco
+    color: "#ffffff",
     marginBottom: 20,
     textAlign: "center",
-    textShadowColor: "#4b0082", // Sombra púrpura
+    textShadowColor: "#4b0082",
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#4b0082", // Borde púrpura
+    borderColor: "#4b0082",
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
     fontSize: 16,
-    color: "#ffffff", // Texto blanco para los inputs
-    backgroundColor: "#2c2c54", // Fondo oscuro para los inputs
+    color: "#ffffff",
+    backgroundColor: "#2c2c54",
   },
 });
 

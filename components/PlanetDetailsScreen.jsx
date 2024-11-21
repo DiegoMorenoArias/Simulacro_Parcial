@@ -39,7 +39,7 @@ const PlanetDetailsScreen = ({ id }) => {
   const handleDelete = async () => {
     try {
       await fetch(`${API_BASE_URL}/planets/${id}`, { method: "DELETE" });
-      router.back(); // Regresa al listado de planetas
+      router.replace("/"); // Regresa al listado de planetas
     } catch (error) {
       console.error("Error deleting planet:", error);
     }
