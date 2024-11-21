@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import { View, TextInput, Button, StyleSheet, Text } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { API_BASE_URL } from "../constants/Config";
 
@@ -24,8 +24,19 @@ const AddEditPlanetScreen = () => {
   const fetchPlanetDetails = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/planets/${id}`);
-      const data = await response.json();
-      setPlanet(data);
+      if (response.ok) {
+        const data = await response.json();
+        setPlanet({
+          name: data.name || "",
+          description: data.description || "",
+          moons: data.moons || 0,
+          moon_names: data.moon_names || [],
+          image: data.image || "",
+        });
+      } else {
+        console.log("aca");
+        console.error("Error: No se pudieron obtener los detalles del planeta");
+      }
     } catch (error) {
       console.error("Error fetching planet details:", error);
     }
@@ -38,13 +49,17 @@ const AddEditPlanetScreen = () => {
         ? `${API_BASE_URL}/planets/${id}`
         : `${API_BASE_URL}/planets`;
 
-      await fetch(url, {
+      const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(planet),
       });
 
-      router.back();
+      if (response.ok) {
+        router.back(); // Navegar hacia atrás al guardar exitosamente
+      } else {
+        console.error("Error al guardar el planeta.");
+      }
     } catch (error) {
       console.error("Error saving planet:", error);
     }
@@ -52,6 +67,9 @@ const AddEditPlanetScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>
+        {id ? "Editar Planeta" : "Agregar Planeta"}
+      </Text>
       <TextInput
         style={styles.input}
         placeholder="Nombre"
@@ -79,7 +97,7 @@ const AddEditPlanetScreen = () => {
         value={planet.image}
         onChangeText={(text) => setPlanet({ ...planet, image: text })}
       />
-      <Button title="Guardar" onPress={handleSave} />
+      <Button title="Guardar" onPress={handleSave} color="#4b0082" />
       <Button title="Cancelar" onPress={() => router.back()} color="gray" />
     </View>
   );
@@ -89,17 +107,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "white",
+    backgroundColor: "#1a1a40", // Fondo cósmico
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#ffffff", // Texto blanco
+    marginBottom: 20,
+    textAlign: "center",
+    textShadowColor: "#4b0082", // Sombra púrpura
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#4b0082", // Borde púrpura
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
     fontSize: 16,
+    color: "#ffffff", // Texto blanco para los inputs
+    backgroundColor: "#2c2c54", // Fondo oscuro para los inputs
   },
 });
 
-// Aseguramos que la exportación sea explícita
 export default AddEditPlanetScreen;

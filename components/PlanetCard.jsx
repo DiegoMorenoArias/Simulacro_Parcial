@@ -18,36 +18,42 @@ const PlanetCard = ({ planet, onPress }) => {
 const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#2c2c54", // Fondo púrpura oscuro
     marginVertical: 8,
-    borderRadius: 8,
+    borderRadius: 10,
     overflow: "hidden",
     shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 3,
-    elevation: 3, // Para sombra en Android
+    shadowOpacity: 0.4, // Sombra más destacada
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+    elevation: 5, // Sombra para Android
   },
   image: {
     width: 80,
     height: 80,
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
+    resizeMode: "cover",
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderColor: "#4b0082", // Borde púrpura
+    borderWidth: 2,
   },
   infoContainer: {
     flex: 1,
-    padding: 8,
+    padding: 10,
     justifyContent: "center",
   },
   name: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
-    color: "#333",
+    color: "#ffffff", // Texto blanco
     marginBottom: 4,
+    textShadowColor: "#4b0082", // Sombra púrpura
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   description: {
-    fontSize: 12,
-    color: "#666",
+    fontSize: 14,
+    color: "#dcdcdc", // Texto gris claro
   },
 });
 

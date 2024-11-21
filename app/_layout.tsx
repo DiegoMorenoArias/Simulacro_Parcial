@@ -1,3 +1,5 @@
+//./app/_layout.tsx
+
 import {
   DarkTheme,
   DefaultTheme,
@@ -34,20 +36,7 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="details/[id]"
-          options={{
-            title: "Detalles del Planeta",
-            presentation: "modal",
-          }}
-        />
-        <Stack.Screen
-          name="add-edit"
-          options={{
-            title: "Agregar/Editar Planeta",
-            presentation: "modal",
-          }}
-        />
+        <Stack.Screen name="+not-found" options={{ headerShown: false }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

@@ -21,24 +21,31 @@ export default function TabLayout() {
         tabBarStyle: Platform.select({
           ios: {
             position: "absolute",
+            backgroundColor: "#1a1a40", // Fondo oscuro similar a la temática cósmica
+            borderTopColor: "#4b0082", // Bordes en color púrpura
+            borderTopWidth: 2,
           },
-          default: {},
+          default: {
+            backgroundColor: "#1a1a40", // Fondo oscuro similar a la temática cósmica
+            borderTopColor: "#4b0082", // Bordes en color púrpura
+            borderTopWidth: 2,
+          },
         }),
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="details"
         options={{
-          title: "Home",
+          title: "planetas",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="house.fill" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="add-edit"
         options={{
-          title: "Explore",
+          title: "Add",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="paperplane.fill" color={color} />
           ),
