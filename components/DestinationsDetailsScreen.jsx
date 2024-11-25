@@ -11,26 +11,26 @@ import { useRouter } from "expo-router";
 import { API_BASE_URL } from "../constants/Config";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const PlanetDetailsScreen = ({ id }) => {
-  const [planet, setPlanet] = useState(null);
+const DestinationsDetailsScreen = ({ id }) => {
+  const [destination, setdestination] = useState(null);
   const router = useRouter();
   useEffect(() => {
     if (id) {
-      fetchPlanetDetails();
+      fetchdestinationDetails();
     }
   }, [id]);
 
-  const fetchPlanetDetails = async () => {
+  const fetchdestinationDetails = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/destinations/${id}`);
       if (response.ok) {
         const data = await response.json();
-        setPlanet(data);
+        setdestination(data);
       } else {
-        console.error("Error: No se pudieron obtener los detalles del planeta");
+        console.error("Error: No se pudieron obtener los detalles del destinationa");
       }
     } catch (error) {
-      console.error("Error fetching planet details:", error);
+      console.error("Error fetching destination details:", error);
     }
   };
 
@@ -39,17 +39,17 @@ const PlanetDetailsScreen = ({ id }) => {
       await fetch(`${API_BASE_URL}/destinations/${id}`, { method: "DELETE" });
       router.replace("/"); // vuelvo a la página principal
     } catch (error) {
-      console.error("Error deleting planet:", error);
+      console.error("Error deleting destination:", error);
     }
   };
 
-  if (!planet) return <Text style={styles.text}>Cargando...</Text>;
+  if (!destination) return <Text style={styles.text}>Cargando...</Text>;
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.title}>{planet.name}</Text>
-        <Text style={styles.text}>Descripción: {planet.description}</Text>
+        <Text style={styles.title}>{destination.name}</Text>
+        <Text style={styles.text}>Descripción: {destination.description}</Text>
         <TouchableOpacity
           style={styles.editButton}
           onPress={() => router.push(`/add-edit?id=${id}`)}
@@ -125,4 +125,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlanetDetailsScreen;
+export default DestinationsDetailsScreen;

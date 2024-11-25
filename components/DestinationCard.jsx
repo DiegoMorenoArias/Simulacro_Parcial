@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { API_BASE_URL } from "@/constants/Config";
 import { router } from "expo-router";
 
-const PlanetCard = ({ planet, onPress }) => {
-  const [planetit, setPlanets] = useState(planet);
+const DestinationCard = ({ destination, onPress }) => {
+  const [destinationit, setdestinations] = useState(destination);
 
   const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
@@ -20,7 +20,7 @@ const PlanetCard = ({ planet, onPress }) => {
   };
 
   const handleFavorite = async () => {
-    const id = planetit.id;
+    const id = destinationit.id;
 
     try {
       const method = id ? "PUT" : "POST";
@@ -31,47 +31,47 @@ const PlanetCard = ({ planet, onPress }) => {
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...planetit, isFavorite: !planetit.isFavorite }),
+        body: JSON.stringify({ ...destinationit, isFavorite: !destinationit.isFavorite }),
       });
       try {
         const response = await fetch(`${API_BASE_URL}/destinations/${id}`);
         const data = await response.json();
-        setPlanets(data);
+        setdestinations(data);
       } catch (error) {
-        console.error("Error fetching planets:", error);
+        console.error("Error fetching destinations:", error);
       }
 
       if (response.ok) {
         router.replace("/");
       } else {
-        console.error("Error al guardar el planeta.");
+        console.error("Error al guardar el destinationa.");
       }
     } catch (error) {
-      console.error("Error saving planet:", error);
+      console.error("Error saving destination:", error);
     }
   };
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.card}>
       <View style={styles.infoContainer}>
-        <Text style={styles.name}>{planet.name}</Text>
+        <Text style={styles.name}>{destination.name}</Text>
         <Text style={styles.description} numberOfLines={2}>
-          {planet.description}
+          {destination.description}
         </Text>
         <View style={styles.detailsContainer}>
           <Text
             style={[
               styles.difficulty,
-              { color: getDifficultyColor(planet.difficulty) },
+              { color: getDifficultyColor(destination.difficulty) },
             ]}
           >
-            Dificultad: {planet.difficulty}
+            Dificultad: {destination.difficulty}
           </Text>
           <TouchableOpacity onPress={handleFavorite}>
             <Text
               style={[
                 styles.favorite,
-                { color: planetit.isFavorite ? "#ff2d00" : "#808080" },
+                { color: destinationit.isFavorite ? "#ff2d00" : "#808080" },
               ]}
             >
               Favorito
@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlanetCard;
+export default DestinationCard;

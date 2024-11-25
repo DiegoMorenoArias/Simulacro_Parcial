@@ -12,10 +12,10 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { API_BASE_URL } from "../constants/Config";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const AddEditPlanetScreen = () => {
+const AddEditDestinationScreen = () => {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const [planet, setPlanet] = useState({
+  const [destination, setdestination] = useState({
     name: "",
     description: "",
     difficulty: "medium", // valor por defecto cuando alguien apreta para agregar un destino
@@ -24,16 +24,16 @@ const AddEditPlanetScreen = () => {
 
   useEffect(() => {
     if (id) {
-      fetchPlanetDetails();
+      fetchdestinationDetails();
     }
   }, [id]);
 
-  const fetchPlanetDetails = async () => {
+  const fetchdestinationDetails = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/destinations/${id}`);
       if (response.ok) {
         const data = await response.json();
-        setPlanet({
+        setdestination({
           name: data.name || "",
           description: data.description || "",
           difficulty: data.difficulty || "easy",
@@ -57,7 +57,7 @@ const AddEditPlanetScreen = () => {
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(planet),
+        body: JSON.stringify(destination),
       });
 
       if (response.ok) {
@@ -74,14 +74,14 @@ const AddEditPlanetScreen = () => {
     <TouchableOpacity
       style={[
         styles.checkboxContainer,
-        planet.difficulty === value && styles.checkboxSelected,
+        destination.difficulty === value && styles.checkboxSelected,
       ]}
-      onPress={() => setPlanet({ ...planet, difficulty: value })}
+      onPress={() => setdestination({ ...destination, difficulty: value })}
     >
       <View
         style={[
           styles.checkbox,
-          planet.difficulty === value && styles.checkboxChecked,
+          destination.difficulty === value && styles.checkboxChecked,
         ]}
       />
       <Text style={styles.checkboxLabel}>{label}</Text>
@@ -98,15 +98,15 @@ const AddEditPlanetScreen = () => {
           style={styles.input}
           placeholder="Nombre"
           placeholderTextColor="#ffffff"
-          value={planet.name}
-          onChangeText={(text) => setPlanet({ ...planet, name: text })}
+          value={destination.name}
+          onChangeText={(text) => setdestination({ ...destination, name: text })}
         />
         <TextInput
           style={styles.input}
           placeholder="Descripción"
           placeholderTextColor="#ffffff"
-          value={planet.description}
-          onChangeText={(text) => setPlanet({ ...planet, description: text })}
+          value={destination.description}
+          onChangeText={(text) => setdestination({ ...destination, description: text })}
           multiline
         />
 
@@ -200,4 +200,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddEditPlanetScreen;
+export default AddEditDestinationScreen;

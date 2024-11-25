@@ -1,11 +1,11 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import PlanetListScreen from "../../../components/PlanetListScreen";
+import DestinationsListScreen from "../../../components/DestinationsListScreen";
 
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <PlanetListScreen />
+      <DestinationsListScreen />
     </View>
   );
 }

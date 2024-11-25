@@ -1,7 +1,7 @@
 //./app/details/[id].jsx
 
 import { View } from "react-native";
-import PlanetDetailsScreen from "../../../components/PlanetDetailsScreen";
+import DestinationsDetailsScreen from "../../../components/DestinationsDetailsScreen";
 import { usePathname } from "expo-router"; // Para obtener la URL completa
 import { useState, useEffect } from "react";
 
@@ -18,7 +18,7 @@ export default function DetailsPage() {
 
   return (
     <View style={{ flex: 1 }}>
-      <PlanetDetailsScreen id={id} />
+      <DestinationsDetailsScreen id={id} />
     </View>
   );
 }

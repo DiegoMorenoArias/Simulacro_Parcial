@@ -6,38 +6,38 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-import PlanetCard from "./PlanetCard";
+import DestinationCard from "./DestinationCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { API_BASE_URL } from "../constants/Config";
 
-const PlanetListScreen = () => {
-  const [planets, setPlanets] = useState([]);
+const DestinationsListScreen = () => {
+  const [destinations, setdestinations] = useState([]);
 
   useEffect(() => {
-    fetchPlanets();
+    fetchdestinations();
   }, []);
 
-  const fetchPlanets = async () => {
+  const fetchdestinations = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/destinations`);
       const data = await response.json();
       // me ayudé de una resolución de parcial anterior para resolver el sort alfabetico adaptándolo
       // al favorite de éste
-      const sortedPlanets = data.sort((a, b) => {
+      const sorteddestinations = data.sort((a, b) => {
         if (a.isFavorite === b.isFavorite) {
           return a.name.localeCompare(b.name);
         }
         return b.isFavorite ? 1 : -1;
       });
 
-      setPlanets(sortedPlanets);
+      setdestinations(sorteddestinations);
     } catch (error) {
-      console.error("Error fetching planets:", error);
+      console.error("Error fetching destinations:", error);
     }
   };
 
-  const handlePlanetPress = (id) => {
+  const handledestinationPress = (id) => {
     router.push(`/(tabs)/destinations/${id}`);
   };
 
@@ -51,12 +51,12 @@ const PlanetListScreen = () => {
       </TouchableOpacity>
       <FlatList
         style={styles.flatList}
-        data={planets}
+        data={destinations}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <PlanetCard
-            planet={item}
-            onPress={() => handlePlanetPress(item.id)}
+          <DestinationCard
+            destination={item}
+            onPress={() => handledestinationPress(item.id)}
           />
         )}
       />
@@ -88,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlanetListScreen;
+export default DestinationsListScreen;
