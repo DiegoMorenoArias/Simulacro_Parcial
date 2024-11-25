@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   editButton: {
     backgroundColor: "#4b0082",
     padding: 10,
-    width: "90%",
+    width: "85%", // como pide la letra de una
     alignItems: "center",
     borderRadius: 10,
     marginBottom: 10,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   deleteButton: {
     backgroundColor: "#ff4d4d",
     padding: 10,
-    width: "90%",
+    width: "85%", // como pide la letra pa la responsividad
     alignItems: "center",
     borderRadius: 10,
   },
