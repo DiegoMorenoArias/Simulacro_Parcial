@@ -74,7 +74,7 @@ const DestinationCard = ({ destination, onPress }) => {
                 { color: destinationit.isFavorite ? "#ff2d00" : "#808080" },
               ]}
             >
-              Favorito
+              ★
             </Text>
           </TouchableOpacity>
         </View>
