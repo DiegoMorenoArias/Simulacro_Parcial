@@ -7,14 +7,13 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { useRouter } from "expo-router"; // Para navegación
+import { useRouter } from "expo-router";
 import { API_BASE_URL } from "../constants/Config";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const PlanetDetailsScreen = ({ id }) => {
   const [planet, setPlanet] = useState(null);
-  const router = useRouter(); // Para navegar
-  console.log(id)
+  const router = useRouter();
   useEffect(() => {
     if (id) {
       fetchPlanetDetails();
@@ -23,12 +22,11 @@ const PlanetDetailsScreen = ({ id }) => {
 
   const fetchPlanetDetails = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/planets/${id}`);
+      const response = await fetch(`${API_BASE_URL}/destinations/${id}`);
       if (response.ok) {
         const data = await response.json();
         setPlanet(data);
       } else {
-        console.log("holaaa " + id);
         console.error("Error: No se pudieron obtener los detalles del planeta");
       }
     } catch (error) {
@@ -38,8 +36,8 @@ const PlanetDetailsScreen = ({ id }) => {
 
   const handleDelete = async () => {
     try {
-      await fetch(`${API_BASE_URL}/planets/${id}`, { method: "DELETE" });
-      router.replace("/"); // Regresa al listado de planetas
+      await fetch(`${API_BASE_URL}/destinations/${id}`, { method: "DELETE" });
+      router.replace("/"); // vuelvo a la página principal
     } catch (error) {
       console.error("Error deleting planet:", error);
     }
@@ -50,11 +48,8 @@ const PlanetDetailsScreen = ({ id }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Image source={{ uri: planet.image }} style={styles.image} />
         <Text style={styles.title}>{planet.name}</Text>
         <Text style={styles.text}>Descripción: {planet.description}</Text>
-        <Text style={styles.text}>Cantidad de lunas: {planet.moons}</Text>
-        <Text style={styles.text}>Lunas: {planet.moon_names.join(", ")}</Text>
         <TouchableOpacity
           style={styles.editButton}
           onPress={() => router.push(`/add-edit?id=${id}`)}
@@ -72,39 +67,39 @@ const PlanetDetailsScreen = ({ id }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#1a1a40", // Fondo cósmico
+    backgroundColor: "#1a1a40", 
   },
   scrollContainer: {
-    alignItems: "center", // Centra el contenido horizontalmente
+    alignItems: "center",
     padding: 16,
   },
   image: {
     width: "50%",
-    aspectRatio: 1, // Mantiene la relación de aspecto cuadrada
-    resizeMode: "contain", // Asegura que la imagen no se deforme
+    aspectRatio: 1,
+    resizeMode: "contain",
     borderRadius: 10,
     marginBottom: 16,
     borderWidth: 2,
-    borderColor: "#4b0082", // Borde púrpura
+    borderColor: "#4b0082",
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#ffffff", // Texto blanco
+    color: "#ffffff",
     textAlign: "center",
     marginBottom: 16,
-    textShadowColor: "#4b0082", // Sombra púrpura
+    textShadowColor: "#4b0082",
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
   },
   text: {
     fontSize: 16,
-    color: "#dcdcdc", // Gris claro
+    color: "#dcdcdc",
     marginBottom: 8,
     textAlign: "center",
   },
   editButton: {
-    backgroundColor: "#4b0082", // Púrpura para el botón de editar
+    backgroundColor: "#4b0082",
     padding: 10,
     width: "90%",
     alignItems: "center",
@@ -117,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   deleteButton: {
-    backgroundColor: "#ff4d4d", // Rojo para el botón de eliminar
+    backgroundColor: "#ff4d4d",
     padding: 10,
     width: "90%",
     alignItems: "center",

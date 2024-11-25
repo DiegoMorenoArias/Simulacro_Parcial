@@ -1,3 +1,3 @@
 import { Redirect } from "expo-router";
 
-export default () => <Redirect href="(tabs)/planets" />;
+export default () => <Redirect href="(tabs)/destinations" />;
